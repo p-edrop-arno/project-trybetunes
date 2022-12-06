@@ -57,10 +57,10 @@ class ProfileEdit extends Component {
   salverUser = async () => {
     const { name, email, picture, description } = this.state;
     const userInfo = {
-      name: name,
-      email: email,
+      name,
+      email,
       image: picture,
-      description: description,
+      description,
     };
     this.setState({
       requisition: false,
@@ -100,8 +100,8 @@ class ProfileEdit extends Component {
             id="name"
             type="name"
             data-testid="edit-input-name"
-            value={name}
-            onChange={this.handleChange}
+            value={ name }
+            onChange={ this.handleChange }
           />
         </label>
         <label htmlFor="email">
@@ -111,18 +111,18 @@ class ProfileEdit extends Component {
             name="email"
             id="email"
             data-testid="edit-input-email"
-            value={email}
-            onChange={this.handleChange}
+            value={ email }
+            onChange={ this.handleChange }
           />
         </label>
         <label htmlFor="description">
-          Descrição:
+          Descrição!:
           <textarea
             name="description"
             id="description"
             data-testid="edit-input-description"
-            value={description}
-            onChange={this.handleChange}
+            value={ description }
+            onChange={ this.handleChange }
           />
         </label>
         <label htmlFor="picture">
@@ -132,15 +132,15 @@ class ProfileEdit extends Component {
             name="picture"
             id="name"
             data-testid="edit-input-image"
-            value={picture}
-            onChange={this.handleChange}
+            value={ picture }
+            onChange={ this.handleChange }
           />
         </label>
         <button
           type="button"
           data-testid="edit-button-save"
-          disabled={buttonBlock}
-          onClick={this.salverUser}
+          disabled={ buttonBlock }
+          onClick={ this.salverUser }
         >
           Salvar
         </button>
