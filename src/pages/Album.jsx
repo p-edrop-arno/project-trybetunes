@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import MusicCard from '../components/MusicCard';
 import Header from '../components/Header';
 import getMusics from '../services/musicsAPI';
 import Loading from './Loading';
-import MusicCard from '../components/MusicCard';
-import { addSong, getFavoriteSongs } from '../services/favoriteSongsAPI';
+
+import { addSong, getFavoriteSongs, removeSong } from '../services/favoriteSongsAPI';
+
 
 class Album extends Component {
   state = {
@@ -52,16 +54,25 @@ class Album extends Component {
     this.setState({
       requisition: false,
     });
-    await addSong(song);
-    const favoriteSongs = await getFavoriteSongs();
-    this.setState({
-      requisition: true,
-      favoriteSongs,
-    });
+    if (target.checked) {
+      await addSong(song);
+      const favoriteSongs = await getFavoriteSongs();
+      this.setState({
+        requisition: true,
+        favoriteSongs,
+      });
+    } else {
+      await removeSong(song);
+      const favoriteSongs = await getFavoriteSongs();
+      this.setState({
+        requisition: true,
+        favoriteSongs,
+      });
+    }
   };
 
   render() {
-    const { detailsAlbum, musics, requisition, isChecked, favoriteSongs } = this.state;
+    const { detailsAlbum, musics, requisition, favoriteSongs } = this.state;
     const detailsAlbums = (
       <section>
         <section>
@@ -76,7 +87,6 @@ class Album extends Component {
                 key={ music.trackId }
                 music={ music }
                 clickChange={ this.clickChange }
-                isChecked={ isChecked }
                 favoriteSongs={ favoriteSongs }
                 favorite={ favoriteSongs
                   .some((song) => song.trackId === music.trackId) }
