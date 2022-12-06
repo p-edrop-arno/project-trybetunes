@@ -18,8 +18,8 @@ class Search extends Component {
     const characters = 2;
 
     return (
-            <div data-testid="page-search">
-                  <Header />
+      <div data-testid="page-search">
+        <Header />
         <form className="form">
           <label htmlFor="search-artist-input">
             Nome
