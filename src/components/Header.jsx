@@ -1,40 +1,40 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { getUser } from '../services/userAPI';
 import Loading from '../pages/Loading';
+import { getUser } from '../services/userAPI';
 
 class Header extends Component {
   state = {
-    user: '',
-    loading: true,
+    client: '',
+    successfulRequisition: false,
   };
 
   async componentDidMount() {
-    const response = await getUser();
-    const { name } = response;
+    const usrName = await this.fetchName();
     this.setState({
-      user: name,
-      loading: false,
+      client: usrName,
+      successfulRequisition: true,
     });
   }
 
-  render() {
-    const { user, loading } = this.state;
+  fetchName = async () => {
+    const name = await getUser();
+    return name.name;
+  };
 
+  render() {
+    const { client, successfulRequisition } = this.state;
     return (
       <header data-testid="header-component">
-        {loading ? (<div> Carregando...</div>)
-          : (<div data-testid="header-user-name">{user}</div>)}
         <nav>
-          <Link data-testid="link-to-search" to="/search">search</Link>
-          <Link data-testid="link-to-favorites" to="/favorites">search</Link>
-          <Link data-testid="link-to-profile" to="/profile">search</Link>
+          <Link to="/search" data-testid="link-to-search">Pesquisa</Link>
+          <Link to="/favorites" data-testid="link-to-favorites">Favoritos</Link>
+          <Link to="/profile" data-testid="link-to-profile">Perfil</Link>
         </nav>
-        { completedRequisition ? <h1 data-testid="header-user-name">{ userName }</h1>
-          : <Loading /> }
+        {successfulRequisition ? <h1 data-testid="header-user-name">{client}</h1>
+          : <Loading />}
       </header>
     );
   }
 }
-
 export default Header;
